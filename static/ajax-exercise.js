@@ -8,7 +8,7 @@ function showFortune(evt) {
   fetch('/fortune')
     .then((response) => response.text())
     .then((serverAnswer) => {                             //this is the answer from server with the data requested
-      document.getElementById('fortune-text').innerText = serverAnswer;
+      document.getElementById('fortune-text').innerHTML = serverAnswer;
     });
 }
 
@@ -20,16 +20,18 @@ function showWeather(evt) {
   evt.preventDefault();
 
   const url = '/weather.json';
-  const zipcode = document.querySelector('#zipcode-field').value;
-  const queryString = 
+  const zipcode = document.querySelector('#zipcode-field').value.toString();
+  const queryString = new URLSearchParams({ 'zipcode': zipcode});
+  
 
   // TODO: request weather with that URL and show the forecast in #weather-info
 
-  fetch(url)
+  fetch(`${url}?${queryString}`)
   .then((response) => response.json())
   .then((serverAnswer) => {
     document.getElementById('weather-info').innerText = serverAnswer.forecast;
-    console.log(serverAnswer.forecast);
+    console.log(typeof(zipcode));
+    console.log(serverAnswer);
     
   });
 }
