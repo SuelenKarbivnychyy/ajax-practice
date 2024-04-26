@@ -3,7 +3,7 @@ IMPORTANT: you don't need to change this file at all to finish
 the exercise!
 """
 
-
+import requests
 import random
 
 from flask import Flask, request, render_template, jsonify
@@ -67,6 +67,22 @@ def order_melons():
         result_text = "You want to buy fewer than 1 melons? Huh?"
 
     return jsonify({'code': result_code, 'msg': result_text})
+
+
+@app.route('/dog.json')
+def get_dog_image():
+    """Return a dog image."""
+
+    url = "https://dog.ceo/api/breeds/image/random"
+
+    res = requests.get(url)
+    data = res.json()
+    dogs = data["message"]
+
+    return jsonify(dogs)
+
+
+
 
 
 if __name__ == "__main__":

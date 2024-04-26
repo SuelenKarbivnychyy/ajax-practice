@@ -73,3 +73,26 @@ function orderMelons(evt) {
 
 }
 document.querySelector('#order-form').addEventListener('submit', orderMelons);
+
+
+// FURTHER STUDY
+
+const getDogImage = () => {
+
+  fetch('/dog.json')
+    .then((response) => response.json())
+    .then((serverAnswer) => {     
+
+      const elementToAdd = `<img id='dog' src=${serverAnswer} />`
+      const targetElement = document.getElementById('dog-image')
+      
+      if (! document.getElementById('dog')) {
+        targetElement.insertAdjacentHTML('beforeEnd', elementToAdd);
+      } else {
+        const dogPhoto = document.getElementById('dog');
+        dogPhoto.src=serverAnswer;
+      };  
+    }); 
+}
+
+document.getElementById('get-dog-image').addEventListener('click', getDogImage);
