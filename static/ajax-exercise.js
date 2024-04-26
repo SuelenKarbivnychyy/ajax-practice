@@ -2,12 +2,11 @@
 
 // PART 1: SHOW A FORTUNE
 
-function showFortune(evt) {
-  // TODO: get the fortune and show it in the #fortune-text div
+function showFortune() {
 
   fetch('/fortune')
     .then((response) => response.text())
-    .then((serverAnswer) => {                             //this is the answer from server with the data requested
+    .then((serverAnswer) => {             //this is the answer from server with the data requested
       document.getElementById('fortune-text').innerHTML = serverAnswer;
     });
 }
@@ -23,8 +22,6 @@ function showWeather(evt) {
   const zipcode = document.querySelector('#zipcode-field').value.toString();
   const queryString = new URLSearchParams({ 'zipcode': zipcode});
   
-
-  // TODO: request weather with that URL and show the forecast in #weather-info
 
   fetch(`${url}?${queryString}`)
   .then((response) => response.json())
@@ -61,11 +58,18 @@ function orderMelons(evt) {
     .then((serverAnswer) => {
       const code = serverAnswer.code;
       const msg = serverAnswer.msg;
-      document.getElementById('order-status').innerText = `${code}. ${msg}`;  
+
+      const orderStatus = document.getElementById('order-status');
+
+      if (code === 'ERROR') {
+        orderStatus.classList.add('order-error');
+      } else {
+        orderStatus.classList.remove('order-error');
+      };
+
+      orderStatus.innerHTML = `${code}. ${msg}`;  
 
     });
 
-
-  // TODO: if the result code is ERROR, make it show up in red (see our CSS!)
 }
 document.querySelector('#order-form').addEventListener('submit', orderMelons);
